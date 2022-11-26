@@ -1,0 +1,9 @@
+name: Spleef
+main: net.theiceninja.spleef.SpleefPlugin
+version: 1.0.0
+api-version: 1.19
+author: TheIceNinja
+description: spleef plugin for minigame server
+commands:
+  spleef:
+    description: main command of the plugin.
