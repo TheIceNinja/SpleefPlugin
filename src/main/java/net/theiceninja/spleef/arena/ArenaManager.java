@@ -22,7 +22,7 @@ public class ArenaManager {
     private final SpleefPlugin plugin;
 
     public void addArena(Arena arena, SpleefPlugin plugin) {
-        if (arenas.isEmpty()) plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
         arenas.add(arena);
 
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".arenaName", arena.getDisplayName());
