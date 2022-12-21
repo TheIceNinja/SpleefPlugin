@@ -36,8 +36,6 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
         subCommandList.add(new DeleteSubCommand(arenaManager, plugin));
     }
 
-
-    @SneakyThrows
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
@@ -58,19 +56,16 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
         }
 
         for (SubCommand subCommand : subCommandList) {
-            if (subCommand.getName() == null) {
+            if (args[0].equalsIgnoreCase(subCommand.getName())) {
+                subCommand.execute(player, args);
+            } else {
                 if (player.hasPermission("spleef.admin")) {
                     player.sendMessage(ColorUtils.color("&7Usage: /spleef <create|delete|list|join|quit|randomArena>"));
                 } else {
                     player.sendMessage(ColorUtils.color("&7Usage: /spleef <join|quit|randomArena>"));
                 }
-                return true;
-            } else {
-                if (args[0].equalsIgnoreCase(subCommand.getName()))
-                subCommand.execute(player, args);
             }
         }
-
 
         return true;
     }

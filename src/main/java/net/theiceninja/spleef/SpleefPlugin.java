@@ -14,7 +14,7 @@ public class SpleefPlugin extends JavaPlugin {
         super.onEnable();
         getConfig().options().copyDefaults(false);
         saveDefaultConfig();
-        arenaManager = new ArenaManager(this);
+        arenaManager = new ArenaManager();
         getCommand("spleef").setExecutor(new SpleefCommand(arenaManager, this));
         getCommand("spleef").setTabCompleter(new SpleefCommand(arenaManager, this));
 

@@ -1,17 +1,18 @@
 package net.theiceninja.spleef.tasks;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaState;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
-@Data
 @RequiredArgsConstructor
 public class CooldownTask extends BukkitRunnable {
 
-    private Arena arena;
+    @Getter
+    private final Arena arena;
+    @Getter
     private int timeLeft = 11;
 
     @Override

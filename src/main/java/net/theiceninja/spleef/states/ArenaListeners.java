@@ -1,6 +1,6 @@
 package net.theiceninja.spleef.states;
 
-import lombok.Data;
+import lombok.Getter;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaState;
 import net.theiceninja.spleef.utils.ColorUtils;
@@ -21,9 +21,9 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
-@Data
 public class ArenaListeners implements Listener {
 
+    @Getter
     private final Arena arena;
 
     public ArenaListeners(Arena arena) {

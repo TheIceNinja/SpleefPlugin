@@ -18,8 +18,6 @@ public class CreateSubCommand implements SubCommand {
 
     @Override
     public void execute(Player player, String[] args) {
-
-
         if (!player.hasPermission("spleef.admin")) {
             player.sendMessage(Message.NO_PERMISSION);
             return;

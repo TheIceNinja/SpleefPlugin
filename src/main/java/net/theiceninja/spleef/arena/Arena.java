@@ -68,8 +68,7 @@ public class Arena {
                 if (cooldownTask != null) cooldownTask.cancel();
 
                 updateScoreboard();
-                cooldownTask = new CooldownTask();
-                cooldownTask.setArena(this);
+                cooldownTask = new CooldownTask(this);
                 cooldownTask.runTaskTimer(plugin, 0, 20);
 
                 for (UUID playerUUID : aliveUUID) {
@@ -88,8 +87,7 @@ public class Arena {
                     player.getInventory().addItem(Items.spleefItem);
                 }
 
-                cooldownGameTask = new CooldownGameTask();
-                cooldownGameTask.setArena(this);
+                cooldownGameTask = new CooldownGameTask(this);
                 cooldownGameTask.runTaskTimer(plugin, 0, 20);
                 playSound(Sound.MUSIC_DISC_PIGSTEP);
                 break;

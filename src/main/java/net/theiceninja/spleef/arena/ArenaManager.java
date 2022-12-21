@@ -1,8 +1,6 @@
 package net.theiceninja.spleef.arena;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.states.ArenaListeners;
 import org.bukkit.Location;
@@ -12,14 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Data
-@RequiredArgsConstructor
 public class ArenaManager {
 
     @Getter
     private List<Arena> arenas = new ArrayList<>();
-
-    private final SpleefPlugin plugin;
 
     public void addArena(Arena arena, SpleefPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);

@@ -22,6 +22,7 @@ public class JoinSubCommand implements SubCommand {
             player.sendMessage(ColorUtils.color("&cאין כרגע שום ארנה מוכנה שאתה יכול להכנס אליה."));
             return;
         }
+
         if (args.length == 1) {
             player.sendMessage(ColorUtils.color("&cבבקשה ציין את שם הארנה שאתה רוצה להכנס."));
             return;
