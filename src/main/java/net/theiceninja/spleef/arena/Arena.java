@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static net.theiceninja.spleef.utils.ColorUtils.color;
 
 @Data
 public class Arena {
@@ -31,16 +30,13 @@ public class Arena {
     private Location spawnLocation;
     private Location spectatorLocation;
     private ArenaState arenaState;
-
     private ArenaManager arenaManager;
     private CooldownGameTask cooldownGameTask;
     private CooldownTask cooldownTask;
     private List<Location> brokenBlocks = new ArrayList<>();
-
     private List<UUID> aliveUUID = new ArrayList<>();
     private List<UUID> spectatorUUID = new ArrayList<>();
-    private final SpleefPlugin plugin;
-
+    private SpleefPlugin plugin;
     private PlayerRollBackManager playerRollBackManager;
 
 
@@ -68,23 +64,28 @@ public class Arena {
                 break;
             case COOLDOWN:
                 if (cooldownTask != null) cooldownTask.cancel();
+
                 updateScoreboard();
                 cooldownTask = new CooldownTask();
                 cooldownTask.setArena(this);
                 cooldownTask.runTaskTimer(plugin, 0, 20);
+
                 for (UUID playerUUID : aliveUUID) {
                     Player player = Bukkit.getPlayer(playerUUID);
                     player.teleport(spawnLocation);
                     player.setHealth(20);
                 }
+
                 break;
             case ACTIVE:
                 if (cooldownGameTask != null) cooldownGameTask.cancel();
+
                 updateScoreboard();
                 for (UUID playerUUID : aliveUUID) {
                     Player player = Bukkit.getPlayer(playerUUID);
                     player.getInventory().addItem(Items.spleefItem);
                 }
+
                 cooldownGameTask = new CooldownGameTask();
                 cooldownGameTask.setArena(this);
                 cooldownGameTask.runTaskTimer(plugin, 0, 20);
@@ -98,6 +99,7 @@ public class Arena {
         aliveUUID.add(player.getUniqueId());
         updateScoreboard();
         player.setGameMode(GameMode.SURVIVAL);
+
         if (aliveUUID.size() == MINIMUM_PLAYERS) {
             setArenaState(ArenaState.COOLDOWN);
         }
@@ -110,10 +112,13 @@ public class Arena {
         if (isSpectating(player)) {
             spectatorUUID.remove(player.getUniqueId());
         }
+
         updateScoreboard();
         player.stopAllSounds();
+
         if (arenaState == ArenaState.COOLDOWN) {
             if (cooldownTask != null) cooldownTask.cancel();
+
             setArenaState(ArenaState.DEFAULT);
             sendMessage("&cשחקן יצא, לכן המשחק חזר להיות במצב ממתין חכו לעוד שחקנים.");
             updateScoreboard();
@@ -139,6 +144,7 @@ public class Arena {
 
     public void join(Player player, Optional<Arena> optionalArena) {
         if (!optionalArena.isPresent()) return;
+
         optionalArena.get().addAlivePlayers(player);
         playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
         player.teleport(optionalArena.get().spawnLocation);
@@ -146,6 +152,7 @@ public class Arena {
     }
     public void quit(Player player, Optional<Arena> optionalArena) {
         if (!optionalArena.isPresent()) return;
+
         playSound(Sound.ENTITY_WARDEN_HURT);
         sendMessage("&7[&c-&7] &4" + player.getDisplayName());
         optionalArena.get().removePlayer(player);
@@ -158,8 +165,9 @@ public class Arena {
         aliveUUID.remove(player.getUniqueId());
         updateScoreboard();
         player.setGameMode(GameMode.SPECTATOR);
-        player.sendTitle(color("&b&lSpleef"), color("&cאתה מתת!"));
+        player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color("&cאתה מתת!"));
         sendMessage("&c" + player.getDisplayName() + " &edied!");
+
         if (aliveUUID.size() == 1) {
             updateScoreboard();
             playSound(Sound.ENTITY_ENDER_DRAGON_DEATH);
@@ -179,12 +187,12 @@ public class Arena {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendMessage(color(str));
+            player.sendMessage(ColorUtils.color(str));
         }
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendMessage(color(str));
+            player.sendMessage(ColorUtils.color(str));
         }
     }
 
@@ -194,17 +202,20 @@ public class Arena {
         if (cooldownTask != null) cooldownTask.cancel();
         stopSound(Sound.MUSIC_DISC_PIGSTEP);
         brokenBlocks.forEach(location -> location.getBlock().setType(Material.SNOW_BLOCK));
+
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             playerRollBackManager.restore(player);
             player.setFireTicks(0);
             player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
         }
+
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             playerRollBackManager.restore(player);
             player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
         }
+
         aliveUUID.clear();
         spectatorUUID.clear();
     }
@@ -224,12 +235,12 @@ public class Arena {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendTitle(color("&b&lSpleef"), color(s), 0, 40, 0);
+            player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color(s), 0, 40, 0);
         }
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendTitle(color("&b&lSpleef"), color(s), 0, 40, 0);
+            player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color(s), 0, 40, 0);
         }
     }
 
@@ -288,7 +299,7 @@ public class Arena {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = manager.getNewScoreboard();
         List<String> scoreboardLines = new ArrayList<>();
-        Objective objective = scoreboard.registerNewObjective("ice", "dummy", ColorUtils.color("&x&0&8&4&c&f&b&lS&x&3&1&7&6&f&c&lk&x&5&b&a&0&f&c&ly&x&8&4&c&9&f&d&lu&x&a&d&f&3&f&d&lp &7| &fספליף"));
+        Objective objective = scoreboard.registerNewObjective("ice", "dummy", ColorUtils.color("&#0bc1fb&lS&#34cefc&lk&#5cdafc&ly&#85e7fd&lu&#adf3fd&lp &7| &fספליף"));
         scoreboardLines.add("&f");
         if (arenaState == ArenaState.DEFAULT) {
             scoreboardLines.add("&fמצב שחקנים&8: &6" + aliveUUID.size() + "&7/&6" + MAX_PLAYERS);

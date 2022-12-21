@@ -27,12 +27,14 @@ public class ListSubCommand implements SubCommand {
             player.sendMessage(ColorUtils.color("&cעדיין אין ארנה מוכנה, אז לך צור אחת עם /spleef create"));
             return;
         }
+
         player.sendMessage(ColorUtils.color("&b======== &f&lArenas Info &b========"));
         for (Arena arena : arenaManager.getArenas())
             player.sendMessage(ColorUtils.color(
                     "&fArenaName&8: &b" + arena.getDisplayName() + " &fArenaState&8: " + arenaManager.getStateToString(arena) + " &fArenaMaxPlayers&8: &a"
                             + arena.getMAX_PLAYERS() + " &fArenaMinPlayers&8: &c" + arena.getMINIMUM_PLAYERS() + "\n&r\n&r"
             ));
+
         player.sendMessage(ColorUtils.color("&b================"));
     }
 

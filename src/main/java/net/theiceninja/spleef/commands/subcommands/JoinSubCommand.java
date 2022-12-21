@@ -15,8 +15,6 @@ public class JoinSubCommand implements SubCommand {
 
     private final ArenaManager arenaManager;
 
-    private final SpleefPlugin plugin;
-
     @Override
     public void execute(Player player, String[] args) {
 
@@ -28,25 +26,32 @@ public class JoinSubCommand implements SubCommand {
             player.sendMessage(ColorUtils.color("&cבבקשה ציין את שם הארנה שאתה רוצה להכנס."));
             return;
         }
+
         String arenaName = args[1];
         Optional<Arena> optionalArena = arenaManager.findArena(arenaName);
+
         if (!optionalArena.isPresent()) {
             player.sendMessage(ColorUtils.color("&cלא נמצאה שום ארנה עם השם &6'" + args[1] + "'"));
             return;
         }
+
         if (!(optionalArena.get().getArenaState() == ArenaState.DEFAULT || optionalArena.get().getArenaState() == ArenaState.COOLDOWN)) {
             player.sendMessage(ColorUtils.color("&cאי אפשר להכנס לארנה כשהיא במהלך משחק."));
             return;
         }
+
         if (optionalArena.get().getMAX_PLAYERS() == optionalArena.get().getAliveUUID().size()) {
             player.sendMessage(ColorUtils.color("&cהארנה הגיעה לכמות השחקנית המקסימלית, לכן לא תוכל להכנס חכה לתור הבא."));
             return;
         }
+
         for (Arena arena : arenaManager.getArenas())
+
             if (arena.isPlaying(player)) {
                 player.sendMessage(ColorUtils.color("&cאתה לא יכול להכנס כשאתה במשחק."));
                 return;
             }
+
         optionalArena.get().join(player, optionalArena);
     }
 

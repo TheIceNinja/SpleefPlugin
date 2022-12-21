@@ -34,6 +34,7 @@ public class CreateSubCommand implements SubCommand {
             player.sendMessage(ColorUtils.color("&cאתה לא יכול ליצור עוד ארנה עם אותו שם."));
             return;
         }
+
         Arena arena;
         arena = new Arena(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), player.getLocation(), player.getLocation(), ArenaState.DEFAULT, plugin);
         arenaManager.addArena(arena, plugin);

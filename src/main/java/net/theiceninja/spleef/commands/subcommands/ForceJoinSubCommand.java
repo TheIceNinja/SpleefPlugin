@@ -16,8 +16,6 @@ public class ForceJoinSubCommand implements SubCommand {
 
     private final ArenaManager arenaManager;
 
-    private final SpleefPlugin plugin;
-
     @Override
     public void execute(Player player, String[] args) {
 
@@ -31,10 +29,12 @@ public class ForceJoinSubCommand implements SubCommand {
             player.sendMessage(ColorUtils.color("&cאין ארנה פנויה, תאלץ לחכות כמה זמן עד שתתפנה אחת."));
             return;
         }
+
         if (!(optionalArena.get().getArenaState() == ArenaState.DEFAULT || optionalArena.get().getArenaState() == ArenaState.COOLDOWN)) {
             player.sendMessage(ColorUtils.color("&cהארנה דלוקה ולכן אי אפשר להכנס."));
             return;
         }
+
         if (optionalArena.get().getMAX_PLAYERS() == optionalArena.get().getAliveUUID().size()) {
             player.sendMessage(ColorUtils.color("&cהארנה הגיעה לכמות השחקנית המקסימלית, לכן לא תוכל להכנס חכה לתור הבא."));
             return;

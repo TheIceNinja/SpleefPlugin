@@ -21,11 +21,10 @@ public class ArenaManager {
 
     private final SpleefPlugin plugin;
 
-    private Arena arena;
-
     public void addArena(Arena arena, SpleefPlugin plugin) {
         if (arenas.isEmpty()) plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
         arenas.add(arena);
+
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".arenaName", arena.getDisplayName());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".minimumPlayers", arena.getMINIMUM_PLAYERS());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".maximumPlayers", arena.getMAX_PLAYERS());
@@ -41,14 +40,6 @@ public class ArenaManager {
         plugin.saveConfig();
     }
 
-    public Arena getAllArenas() {
-        for (Arena arena : arenas)
-            if (arenas.isEmpty()) return null;
-            else
-                return arena;
-        return null;
-    }
-
     public void loadArenas(SpleefPlugin plugin) {
         for (String arenaKey : plugin.getConfig().getConfigurationSection("arenas").getKeys(false)) {
             ConfigurationSection configSection = plugin.getConfig().getConfigurationSection("arenas." + arenaKey);
@@ -57,11 +48,13 @@ public class ArenaManager {
             int minPlayers = configSection.getInt("minimumPlayers");
             Location spectatorLocation = configSection.getLocation("spectatorLocation");
             Location spawnLocation = configSection.getLocation("spawnLocation");
-            Arena arena = new Arena(configSection.getString("arenaName"), maxPlayers, minPlayers, spawnLocation, spectatorLocation, ArenaState.DEFAULT, plugin);
+            String name = configSection.getString("arenaName");
+            Arena arena = new Arena(name, maxPlayers, minPlayers, spawnLocation, spectatorLocation, ArenaState.DEFAULT, plugin);
             plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
-            addArena(arena, plugin);
+            arenas.add(arena);
         }
     }
+
     public Optional<Arena> findArena(String arenaName) {
        return getArenas().stream().filter(arena1 ->
                arena1.getDisplayName().equalsIgnoreCase(arenaName)).findAny();
@@ -69,9 +62,13 @@ public class ArenaManager {
 
     public String getStateToString(Arena arena) {
         if (arena == null) return null;
+
         if (arena.getArenaState() == ArenaState.DEFAULT) return "&cמצב מכובה";
+
         if (arena.getArenaState() == ArenaState.COOLDOWN) return "&eמצב התכוננות למשחק";
+
         if (arena.getArenaState() == ArenaState.ACTIVE) return "&aמצב משחק";
+
         return null;
     }
 }

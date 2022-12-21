@@ -19,7 +19,9 @@ public class CooldownGameTask extends BukkitRunnable {
         if (timeLeftUntilEnd <= 0) {
             arena.sendMessage("&cהמשחק נגמר כי נגמר הזמן!");
             arena.cleanup();
+            return;
         }
+
         arena.updateScoreboard();
         arena.sendActionBar("&cהמשחק נגמר בעוד&8: &e" + timeLeftUntilEnd/60 + "&7:&e" + timeLeftUntilEnd%60);
     }

@@ -28,11 +28,11 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
         this.arenaManager = arenaManager;
         this.plugin = plugin;
         subCommandList.add(new CreateSubCommand(arenaManager, plugin));
-        subCommandList.add(new JoinSubCommand(arenaManager, plugin));
-        subCommandList.add(new QuitSubCommand(arenaManager, plugin));
+        subCommandList.add(new JoinSubCommand(arenaManager));
+        subCommandList.add(new QuitSubCommand(arenaManager));
         subCommandList.add(new ListSubCommand(arenaManager, plugin));
-        subCommandList.add(new RandomArenaSubCommand(arenaManager, plugin));
-        subCommandList.add(new ForceJoinSubCommand(arenaManager, plugin));
+        subCommandList.add(new RandomArenaSubCommand(arenaManager));
+        subCommandList.add(new ForceJoinSubCommand(arenaManager));
         subCommandList.add(new DeleteSubCommand(arenaManager, plugin));
     }
 
@@ -49,16 +49,14 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
 
         if (args.length == 0) {
-
             if (player.hasPermission("spleef.admin")) {
                 player.sendMessage(ColorUtils.color("&7Usage: /spleef <create|delete|list|join|quit|randomArena>"));
             } else {
                 player.sendMessage(ColorUtils.color("&7Usage: /spleef <join|quit|randomArena>"));
             }
-
             return true;
         }
-        if (args.length > 0)
+
         for (SubCommand subCommand : subCommandList) {
             if (subCommand.getName() == null) {
                 if (player.hasPermission("spleef.admin")) {

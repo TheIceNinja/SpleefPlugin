@@ -3,6 +3,7 @@ package net.theiceninja.spleef.states;
 import lombok.Data;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaState;
+import net.theiceninja.spleef.utils.ColorUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -35,6 +36,7 @@ public class ArenaListeners implements Listener {
         if (arena.getArenaState() == ArenaState.ACTIVE ||
                 arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
     }
+
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
@@ -42,6 +44,7 @@ public class ArenaListeners implements Listener {
         if (arena.getArenaState() == ArenaState.ACTIVE ||
                 arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
     }
+
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
@@ -61,6 +64,7 @@ public class ArenaListeners implements Listener {
         }
         event.setCancelled(true);
     }
+
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
@@ -79,6 +83,7 @@ public class ArenaListeners implements Listener {
             event.getHitBlock().setType(Material.AIR);
         }
     }
+
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -94,6 +99,7 @@ public class ArenaListeners implements Listener {
               arena.addSpectatorPlayers(player);
 
     }
+
     @EventHandler
     public void onSwitch(PlayerSwapHandItemsEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
@@ -101,33 +107,39 @@ public class ArenaListeners implements Listener {
                 arena.getArenaState() == ArenaState.DEFAULT ||
                 arena.getArenaState() == ArenaState.ACTIVE) event.setCancelled(true);
     }
+
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(player)) return;
         arena.removePlayer(player);
     }
+
     @EventHandler
     public void onFoodLevelChanged(FoodLevelChangeEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         if (!arena.isPlaying((Player) event.getEntity())) return;
         event.setCancelled(true);
     }
+
     @EventHandler
     public void onCrafting(CraftItemEvent event) {
         if (!arena.isPlaying((Player) event.getWhoClicked())) return;
         event.setCancelled(true);
     }
+
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (getArena().isPlaying(event.getPlayer())) {
             if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
                 event.setCancelled(true);
+                event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
             }
         }
         if (getArena().isSpectating(event.getPlayer())) {
             if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
                 event.setCancelled(true);
+                event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
             }
         }
     }

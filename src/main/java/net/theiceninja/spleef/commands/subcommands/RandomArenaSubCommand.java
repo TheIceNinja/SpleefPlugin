@@ -15,8 +15,6 @@ public class RandomArenaSubCommand implements SubCommand {
 
     private final ArenaManager arenaManager;
 
-    private final SpleefPlugin plugin;
-
     @Override
     public void execute(Player player, String[] args) {
 

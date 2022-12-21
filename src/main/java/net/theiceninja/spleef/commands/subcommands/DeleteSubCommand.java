@@ -26,6 +26,7 @@ public class DeleteSubCommand implements SubCommand {
             player.sendMessage(ColorUtils.color("&7Usage: /spleef delete <arenaName>"));
             return;
         }
+
         if (plugin.getConfig().getString("arenas." + args[1]) == null) {
             player.sendMessage(ColorUtils.color("&cהארנה עם השם הזה לא נמצאה, תעשה&8: &c/spleef list כדי לראות את רשימת הארנות."));
             return;
