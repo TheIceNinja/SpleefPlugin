@@ -1,7 +1,6 @@
 package net.theiceninja.spleef.commands.subcommands;
 
 import lombok.RequiredArgsConstructor;
-import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaManager;
 import net.theiceninja.spleef.arena.ArenaState;

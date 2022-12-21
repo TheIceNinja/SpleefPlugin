@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 public class DeleteSubCommand implements SubCommand {
 
     private final ArenaManager arenaManager;
-
     private final SpleefPlugin plugin;
 
     @Override

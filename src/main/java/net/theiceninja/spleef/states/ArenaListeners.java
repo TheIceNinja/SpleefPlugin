@@ -1,6 +1,7 @@
 package net.theiceninja.spleef.states;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaState;
 import net.theiceninja.spleef.utils.ColorUtils;
@@ -21,14 +22,11 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
+@RequiredArgsConstructor
 public class ArenaListeners implements Listener {
 
     @Getter
     private final Arena arena;
-
-    public ArenaListeners(Arena arena) {
-        this.arena = arena;
-    }
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
@@ -49,9 +47,12 @@ public class ArenaListeners implements Listener {
     public void onBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(event.getPlayer())) return;
+
         event.setDropItems(false);
         if (arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
+
         if (!(arena.getArenaState() == ArenaState.ACTIVE)) return;
+
         if (event.getBlock().getType() == Material.SNOW_BLOCK) {
             Location block = event.getBlock().getLocation();
             arena.getBrokenBlocks().add(block);
@@ -68,8 +69,10 @@ public class ArenaListeners implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
+
         if (arena.getArenaState() == ArenaState.ACTIVE ||
-                arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
+                arena.getArenaState() == ArenaState.COOLDOWN ||
+                arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
         event.setCancelled(true);
     }
 
@@ -78,6 +81,7 @@ public class ArenaListeners implements Listener {
         if (arena.getArenaState() != ArenaState.ACTIVE) return;
         if (!(event.getEntity() instanceof Snowball)) return;
         if (event.getHitBlock() == null) return;
+
         if (event.getHitBlock().getType() == Material.SNOW_BLOCK) {
             arena.getBrokenBlocks().add(event.getHitBlock().getLocation());
             event.getHitBlock().setType(Material.AIR);
@@ -90,6 +94,7 @@ public class ArenaListeners implements Listener {
         if (!arena.isPlaying(player)) return;
         if (!(arena.getArenaState() == ArenaState.ACTIVE)) return;
         if (event.getPlayer().getLocation().getBlock() == null) return;
+
         if ((player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER ||
         player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_WATER_LILY ||
                 player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_WATER_LILY ||
@@ -97,7 +102,6 @@ public class ArenaListeners implements Listener {
                 player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_LAVA ||
                 player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_STATIONARY_LAVA))
               arena.addSpectatorPlayers(player);
-
     }
 
     @EventHandler
@@ -136,6 +140,7 @@ public class ArenaListeners implements Listener {
                 event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
             }
         }
+
         if (getArena().isSpectating(event.getPlayer())) {
             if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
                 event.setCancelled(true);

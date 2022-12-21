@@ -39,12 +39,16 @@ public class PlayerRollBackManager {
         player.getInventory().clear();
         ItemStack[] previousInventory = playerInventory.get(player.getUniqueId());
         if (previousInventory != null) player.getInventory().setContents(previousInventory);
+
         ItemStack[] previousArmor = playerArmor.get(player.getUniqueId());
         if (previousArmor != null) player.getInventory().setArmorContents(previousArmor);
+
         Location previousLocation = playerLoc.get(player.getUniqueId());
         if (previousLocation != null) player.teleport(previousLocation);
+
         GameMode previousGameMode = playerGameMode.get(player.getUniqueId());
         if (previousGameMode != null)  player.setGameMode(previousGameMode);
+
         double previousHealth = playerHealth.get(player.getUniqueId());
         if (previousHealth != 0) player.setHealth(previousHealth);
 

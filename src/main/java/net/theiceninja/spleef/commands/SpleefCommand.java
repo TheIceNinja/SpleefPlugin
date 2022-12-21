@@ -30,7 +30,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
         subCommandList.add(new CreateSubCommand(arenaManager, plugin));
         subCommandList.add(new JoinSubCommand(arenaManager));
         subCommandList.add(new QuitSubCommand(arenaManager));
-        subCommandList.add(new ListSubCommand(arenaManager, plugin));
+        subCommandList.add(new ListSubCommand(arenaManager));
         subCommandList.add(new RandomArenaSubCommand(arenaManager));
         subCommandList.add(new ForceJoinSubCommand(arenaManager));
         subCommandList.add(new DeleteSubCommand(arenaManager, plugin));

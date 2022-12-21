@@ -1,7 +1,6 @@
 package net.theiceninja.spleef.commands.subcommands;
 
 import lombok.RequiredArgsConstructor;
-import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaManager;
 import net.theiceninja.spleef.utils.ColorUtils;
@@ -13,7 +12,6 @@ public class ListSubCommand implements SubCommand {
 
     private final ArenaManager arenaManager;
 
-    private final SpleefPlugin plugin;
 
     @Override
     public void execute(Player player, String[] args) {
