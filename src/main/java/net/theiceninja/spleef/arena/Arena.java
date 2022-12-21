@@ -1,6 +1,8 @@
 package net.theiceninja.spleef.arena;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.theiceninja.spleef.SpleefPlugin;
@@ -21,7 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-@Data
+@Getter @Setter
 public class Arena {
 
     private String displayName;
@@ -93,6 +95,7 @@ public class Arena {
                 break;
         }
     }
+
     public void addAlivePlayers(Player player) {
         playerRollBackManager.save(player);
         setScoreboard(player);
@@ -219,16 +222,13 @@ public class Arena {
         aliveUUID.clear();
         spectatorUUID.clear();
     }
+
     public boolean isPlaying(Player player) {
         return aliveUUID.contains(player.getUniqueId());
     }
+
     public boolean isSpectating(Player player) {
         return spectatorUUID.contains(player.getUniqueId());
-    }
-
-
-    public Location lobbyLocation() {
-        return plugin.getConfig().getLocation("lobbyLocation");
     }
 
     public void sendTitle(String s) {
@@ -247,6 +247,7 @@ public class Arena {
     public void playSound(Sound sound, Location location) {
         Bukkit.getWorld(location.getWorld().getName()).playSound(location, sound, 1, 1);
     }
+
     public void sendActionBar(String s) {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
@@ -259,18 +260,21 @@ public class Arena {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtils.color(s)));
         }
     }
+
     public void playSound(Sound sound) {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
             player.playSound(player, sound, (float) 0.3, 1);
         }
+
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
             player.playSound(player, sound, (float) 0.3, 1);
         }
     }
+
     public void stopSound(Sound sound) {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
@@ -283,11 +287,13 @@ public class Arena {
             player.stopSound(sound);
         }
     }
+
     public String getPlayerStatus(Player player) {
         if (isPlaying(player)) return "&2שחקן חי";
         if (isSpectating(player)) return "&7מצב צופה";
         return null;
     }
+
     public String getStateToString() {
         if (getArenaState() == ArenaState.DEFAULT) return "&cממתין לשחקנים..";
         if (getArenaState() == ArenaState.COOLDOWN) return "&eהכנה למשחק";
@@ -327,12 +333,14 @@ public class Arena {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard);
     }
+
     public void updateScoreboard() {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
             setScoreboard(player);
         }
+
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
