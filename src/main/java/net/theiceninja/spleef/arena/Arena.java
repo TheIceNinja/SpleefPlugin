@@ -30,7 +30,6 @@ public class Arena {
     private int MAX_PLAYERS;
     private int MINIMUM_PLAYERS;
     private Location spawnLocation;
-    private Location spectatorLocation;
     private ArenaState arenaState;
     private ArenaManager arenaManager;
     private CooldownGameTask cooldownGameTask;
@@ -46,12 +45,11 @@ public class Arena {
         this.plugin = plugin;
     }
 
-    public Arena(String displayName, int MAX_PLAYERS, int MINIMUM_PLAYERS, Location spawnLocation, Location spectatorLocation, ArenaState arenaState, SpleefPlugin plugin) {
+    public Arena(String displayName, int MAX_PLAYERS, int MINIMUM_PLAYERS, Location spawnLocation, ArenaState arenaState, SpleefPlugin plugin) {
         this.displayName = displayName;
         this.MAX_PLAYERS = MAX_PLAYERS;
         this.MINIMUM_PLAYERS = MINIMUM_PLAYERS;
         this.spawnLocation = spawnLocation;
-        this.spectatorLocation = spectatorLocation;
         this.arenaState = arenaState;
         this.plugin = plugin;
         playerRollBackManager = new PlayerRollBackManager();
@@ -59,7 +57,7 @@ public class Arena {
 
     public void setArenaState(ArenaState arenaState) {
         this.arenaState = arenaState;
-     //   getServer().getPluginManager().registerEvents(new ArenaListeners(this), plugin);
+
         switch (arenaState) {
             case DEFAULT:
                 if (cooldownTask != null) cooldownTask.cancel();
@@ -76,7 +74,6 @@ public class Arena {
                     player.teleport(spawnLocation);
                     player.setHealth(20);
                 }
-
                 break;
             case ACTIVE:
                 if (cooldownGameTask != null) cooldownGameTask.cancel();
@@ -160,7 +157,7 @@ public class Arena {
     }
 
     public void addSpectatorPlayers(Player player) {
-        player.teleport(spectatorLocation);
+        player.teleport(spawnLocation);
         playSound(Sound.ENTITY_BLAZE_DEATH);
         spectatorUUID.add(player.getUniqueId());
         aliveUUID.remove(player.getUniqueId());

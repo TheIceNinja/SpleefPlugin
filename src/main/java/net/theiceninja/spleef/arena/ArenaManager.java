@@ -22,7 +22,6 @@ public class ArenaManager {
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".arenaName", arena.getDisplayName());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".minimumPlayers", arena.getMINIMUM_PLAYERS());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".maximumPlayers", arena.getMAX_PLAYERS());
-        plugin.getConfig().set("arenas." + arena.getDisplayName() + ".spectatorLocation", arena.getSpectatorLocation());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".spawnLocation", arena.getSpawnLocation());
         plugin.saveConfig();
     }
@@ -40,10 +39,9 @@ public class ArenaManager {
             if (configSection == null) return;
             int maxPlayers = configSection.getInt("maximumPlayers");
             int minPlayers = configSection.getInt("minimumPlayers");
-            Location spectatorLocation = configSection.getLocation("spectatorLocation");
             Location spawnLocation = configSection.getLocation("spawnLocation");
             String name = configSection.getString("arenaName");
-            Arena arena = new Arena(name, maxPlayers, minPlayers, spawnLocation, spectatorLocation, ArenaState.DEFAULT, plugin);
+            Arena arena = new Arena(name, maxPlayers, minPlayers, spawnLocation, ArenaState.DEFAULT, plugin);
             plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
             arenas.add(arena);
         }
