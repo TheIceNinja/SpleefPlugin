@@ -29,14 +29,14 @@ public class ArenaListeners implements Listener {
     private final Arena arena;
 
     @EventHandler
-    public void onDrop(PlayerDropItemEvent event) {
+    private void onDrop(PlayerDropItemEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
         if (arena.getArenaState() == ArenaState.ACTIVE ||
                 arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
     }
 
     @EventHandler
-    public void onDamage(EntityDamageEvent event) {
+    private void onDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         if (!arena.isPlaying((Player) event.getEntity())) return;
         if (arena.getArenaState() == ArenaState.ACTIVE ||
@@ -44,7 +44,7 @@ public class ArenaListeners implements Listener {
     }
 
     @EventHandler
-    public void onBreak(BlockBreakEvent event) {
+    private void onBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(event.getPlayer())) return;
 
@@ -67,7 +67,7 @@ public class ArenaListeners implements Listener {
     }
 
     @EventHandler
-    public void onPlace(BlockPlaceEvent event) {
+    private void onPlace(BlockPlaceEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
 
         if (arena.getArenaState() == ArenaState.ACTIVE ||
@@ -77,7 +77,7 @@ public class ArenaListeners implements Listener {
     }
 
     @EventHandler
-    public void onEntityInteractWithBlocks(ProjectileHitEvent event) {
+    private void onEntityInteractWithBlocks(ProjectileHitEvent event) {
         if (arena.getArenaState() != ArenaState.ACTIVE) return;
         if (!(event.getEntity() instanceof Snowball)) return;
         if (event.getHitBlock() == null) return;
@@ -89,7 +89,7 @@ public class ArenaListeners implements Listener {
     }
 
     @EventHandler
-    public void onMove(PlayerMoveEvent event) {
+    private void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(player)) return;
         if (!(arena.getArenaState() == ArenaState.ACTIVE)) return;
@@ -105,7 +105,7 @@ public class ArenaListeners implements Listener {
     }
 
     @EventHandler
-    public void onSwitch(PlayerSwapHandItemsEvent event) {
+    private void onSwitch(PlayerSwapHandItemsEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
         if (arena.getArenaState() == ArenaState.COOLDOWN ||
                 arena.getArenaState() == ArenaState.DEFAULT ||
@@ -113,27 +113,27 @@ public class ArenaListeners implements Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
+    private void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(player)) return;
         arena.removePlayer(player);
     }
 
     @EventHandler
-    public void onFoodLevelChanged(FoodLevelChangeEvent event) {
+    private void onFoodLevelChanged(FoodLevelChangeEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         if (!arena.isPlaying((Player) event.getEntity())) return;
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onCrafting(CraftItemEvent event) {
+    private void onCrafting(CraftItemEvent event) {
         if (!arena.isPlaying((Player) event.getWhoClicked())) return;
         event.setCancelled(true);
     }
 
     @EventHandler
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+    private void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (getArena().isPlaying(event.getPlayer())) {
             if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
                 event.setCancelled(true);

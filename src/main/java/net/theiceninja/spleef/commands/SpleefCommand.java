@@ -1,11 +1,9 @@
 package net.theiceninja.spleef.commands;
 
-import lombok.SneakyThrows;
 import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.arena.ArenaManager;
 import net.theiceninja.spleef.commands.subcommands.*;
 import net.theiceninja.spleef.utils.ColorUtils;
-import net.theiceninja.spleef.utils.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +38,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Message.MUST_BE_PLAYER_ERROR);
+            sender.sendMessage(ColorUtils.color("&cOnly a player can execute this command!"));
             return true;
         }
 

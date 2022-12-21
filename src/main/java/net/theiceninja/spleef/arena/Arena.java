@@ -11,6 +11,8 @@ import net.theiceninja.spleef.utils.ColorUtils;
 import net.theiceninja.spleef.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -80,7 +82,7 @@ public class Arena {
                 updateScoreboard();
                 for (UUID playerUUID : aliveUUID) {
                     Player player = Bukkit.getPlayer(playerUUID);
-                    player.getInventory().addItem(ItemBuilder.createItem(Material.DIAMOND_SHOVEL
+                    player.getInventory().addItem(createItem(Material.DIAMOND_SHOVEL
                             , 1,
                             "&bDiamond shovel"));
                 }
@@ -304,7 +306,7 @@ public class Arena {
         return null;
     }
 
-    public void setScoreboard(Player player) {
+    private void setScoreboard(Player player) {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = manager.getNewScoreboard();
         List<String> scoreboardLines = new ArrayList<>();
@@ -351,5 +353,17 @@ public class Arena {
             if (player == null) continue;
             setScoreboard(player);
         }
+    }
+
+    private ItemStack createItem(Material material, int amount, String displayName) {
+
+        ItemStack itemStack = new ItemStack(material);
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemStack.setAmount(amount);
+        itemMeta.setDisplayName(ColorUtils.color(displayName));
+        itemMeta.setUnbreakable(true);
+        itemStack.setItemMeta(itemMeta);
+
+        return itemStack;
     }
 }

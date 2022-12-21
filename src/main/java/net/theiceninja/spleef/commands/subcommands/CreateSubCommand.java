@@ -6,7 +6,6 @@ import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.ArenaManager;
 import net.theiceninja.spleef.arena.ArenaState;
 import net.theiceninja.spleef.utils.ColorUtils;
-import net.theiceninja.spleef.utils.Message;
 import org.bukkit.entity.Player;
 
 @RequiredArgsConstructor
@@ -18,7 +17,7 @@ public class CreateSubCommand implements SubCommand {
     @Override
     public void execute(Player player, String[] args) {
         if (!player.hasPermission("spleef.admin")) {
-            player.sendMessage(Message.NO_PERMISSION);
+            player.sendMessage(ColorUtils.color("&cסליחה, אבל אין לך גישה לבצע את הפקודה הזאת."));
             return;
         }
 
