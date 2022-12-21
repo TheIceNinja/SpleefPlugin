@@ -8,7 +8,6 @@ import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.tasks.CooldownGameTask;
 import net.theiceninja.spleef.tasks.CooldownTask;
 import net.theiceninja.spleef.utils.ColorUtils;
-import net.theiceninja.spleef.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -291,14 +290,14 @@ public class Arena {
         }
     }
 
-    public String getPlayerStatus(Player player) {
+    private String getPlayerStatus(Player player) {
         if (isPlaying(player)) return "&2שחקן חי";
 
         if (isSpectating(player)) return "&7מצב צופה";
         return null;
     }
 
-    public String getStateToString() {
+    private String getStateToString() {
         if (getArenaState() == ArenaState.DEFAULT) return "&cממתין לשחקנים..";
 
         if (getArenaState() == ArenaState.COOLDOWN) return "&eהכנה למשחק";
