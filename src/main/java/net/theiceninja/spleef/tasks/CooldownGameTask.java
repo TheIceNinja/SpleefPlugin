@@ -10,7 +10,6 @@ public class CooldownGameTask extends BukkitRunnable {
 
     @Getter
     private final Arena arena;
-
     @Getter
     private int timeLeftUntilEnd = 180;
 

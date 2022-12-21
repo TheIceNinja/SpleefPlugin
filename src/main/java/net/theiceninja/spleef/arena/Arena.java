@@ -1,6 +1,5 @@
 package net.theiceninja.spleef.arena;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatMessageType;
@@ -9,7 +8,7 @@ import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.tasks.CooldownGameTask;
 import net.theiceninja.spleef.tasks.CooldownTask;
 import net.theiceninja.spleef.utils.ColorUtils;
-import net.theiceninja.spleef.utils.Items;
+import net.theiceninja.spleef.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -81,7 +80,9 @@ public class Arena {
                 updateScoreboard();
                 for (UUID playerUUID : aliveUUID) {
                     Player player = Bukkit.getPlayer(playerUUID);
-                    player.getInventory().addItem(Items.spleefItem);
+                    player.getInventory().addItem(ItemBuilder.createItem(Material.DIAMOND_SHOVEL
+                            , 1,
+                            "&bDiamond shovel"));
                 }
 
                 cooldownGameTask = new CooldownGameTask(this);
@@ -232,6 +233,7 @@ public class Arena {
             if (player == null) continue;
             player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color(s), 0, 40, 0);
         }
+
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
@@ -249,6 +251,7 @@ public class Arena {
             if (player == null) continue;
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtils.color(s)));
         }
+
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
@@ -276,6 +279,7 @@ public class Arena {
             if (player == null) continue;
             player.stopSound(sound);
         }
+
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
@@ -285,14 +289,18 @@ public class Arena {
 
     public String getPlayerStatus(Player player) {
         if (isPlaying(player)) return "&2שחקן חי";
+
         if (isSpectating(player)) return "&7מצב צופה";
         return null;
     }
 
     public String getStateToString() {
         if (getArenaState() == ArenaState.DEFAULT) return "&cממתין לשחקנים..";
+
         if (getArenaState() == ArenaState.COOLDOWN) return "&eהכנה למשחק";
+
         if (getArenaState() == ArenaState.ACTIVE) return "&aפעיל";
+
         return null;
     }
 
@@ -312,13 +320,15 @@ public class Arena {
             if (cooldownTask != null)
             scoreboardLines.add("&fהמשחק מתחיל בעוד&8: &b" + cooldownTask.getTimeLeft());
         }
+
         scoreboardLines.add("&fמצב משחק&8: " + getStateToString());
         if (arenaState == ArenaState.ACTIVE && cooldownGameTask != null) {
             scoreboardLines.add("&fשחקנים חיים&8: &a" + aliveUUID.size());
             scoreboardLines.add("&fהמצב שלך&8: " + getPlayerStatus(player));
             scoreboardLines.add("&f ");
-            scoreboardLines.add("&cהמשחק נגמר בעוד&8: &e" + cooldownGameTask.getTimeLeftUntilEnd()/60 + "&7:&e" + cooldownGameTask.getTimeLeftUntilEnd()%60);
+            scoreboardLines.add("&cהמשחק נגמר בעוד&8: &e" + cooldownGameTask.getTimeLeftUntilEnd() / 60 + "&7:&e" + cooldownGameTask.getTimeLeftUntilEnd() % 60);
         }
+
         scoreboardLines.add("&r");
         scoreboardLines.add("&7play.skyup.cf");
         for (int i = 0; i < scoreboardLines.size(); i++) {
