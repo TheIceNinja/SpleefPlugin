@@ -96,7 +96,8 @@ public class Arena {
 
     public void addAlivePlayers(Player player) {
         playerRollBackManager.save(player);
-        setScoreboard(player);
+        player.setHealth(20);
+        player.setFoodLevel(20);
         aliveUUID.add(player.getUniqueId());
         updateScoreboard();
         player.setGameMode(GameMode.SURVIVAL);
@@ -151,6 +152,7 @@ public class Arena {
         player.teleport(optionalArena.get().spawnLocation);
         optionalArena.get().sendMessage("&7[&a+&7] &2" + player.getDisplayName() + " &f#" + aliveUUID.size());
     }
+
     public void quit(Player player, Optional<Arena> optionalArena) {
         if (!optionalArena.isPresent()) return;
 
@@ -233,13 +235,13 @@ public class Arena {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color(s), 0, 40, 0);
+            player.sendTitle(ColorUtils.color("&#0EBFE2&lSpleef"), ColorUtils.color(s), 0, 40, 0);
         }
 
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color(s), 0, 40, 0);
+            player.sendTitle(ColorUtils.color("&#0EBFE2&lSpleef"), ColorUtils.color(s), 0, 40, 0);
         }
     }
 

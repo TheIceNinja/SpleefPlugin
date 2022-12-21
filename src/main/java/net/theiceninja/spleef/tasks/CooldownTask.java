@@ -27,7 +27,6 @@ public class CooldownTask extends BukkitRunnable {
 
         arena.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
         arena.updateScoreboard();
-        arena.sendTitle("&6&l> &2&l" + timeLeft + " &6&l<");
-
+        arena.sendTitle("&#E2AF0E&l> &#0EE221&l" + timeLeft + " &#E2AF0E&l<");
     }
 }
