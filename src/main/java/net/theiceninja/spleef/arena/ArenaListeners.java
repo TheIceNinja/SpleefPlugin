@@ -1,4 +1,4 @@
-package net.theiceninja.spleef.states;
+package net.theiceninja.spleef.arena;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -147,5 +148,15 @@ public class ArenaListeners implements Listener {
                 event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
             }
         }
+    }
+
+    @EventHandler
+    private void onPickUpItem(EntityPickupItemEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+
+        Player player = (Player) event.getEntity();
+
+        if (!arena.isPlaying(player) || !arena.isSpectating(player)) return;
+        event.setCancelled(true);
     }
 }
