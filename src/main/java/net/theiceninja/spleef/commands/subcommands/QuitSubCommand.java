@@ -25,7 +25,7 @@ public class QuitSubCommand implements SubCommand {
                 arena1.getAliveUUID().contains(player.getUniqueId()) ||
                 arena1.getSpectatorUUID().contains(player.getUniqueId())).findAny();
 
-        if (!optionalArena.isPresent()) {
+        if (optionalArena.isEmpty()) {
             player.sendMessage(ColorUtils.color("&cאתה צריך להיות במשחק כדי לצאת מארנה."));
             return;
         }

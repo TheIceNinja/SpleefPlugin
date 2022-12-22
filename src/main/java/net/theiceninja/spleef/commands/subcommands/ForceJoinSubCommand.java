@@ -29,8 +29,12 @@ public class ForceJoinSubCommand implements SubCommand {
             return;
         }
 
-        Optional<Arena> optionalArena = arenaManager.getArenas().stream().filter(arena1 -> arena1.getArenaState() == ArenaState.COOLDOWN || arena1.getArenaState() == ArenaState.DEFAULT).findAny();
-        if (!optionalArena.isPresent()) {
+        Optional<Arena> optionalArena = arenaManager.getArenas()
+                .stream().
+                filter(arena1 -> arena1.getArenaState() == ArenaState.COOLDOWN || arena1.getArenaState() == ArenaState.DEFAULT)
+                .findAny();
+
+        if (optionalArena.isEmpty()) {
             player.sendMessage(ColorUtils.color("&cאין ארנה פנויה, תאלץ לחכות כמה זמן עד שתתפנה אחת."));
             return;
         }
