@@ -46,8 +46,8 @@ public class ArenaListeners implements Listener {
     private void onBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(event.getPlayer())) return;
+            event.setDropItems(false);
 
-        event.setDropItems(false);
         if (arena.getArenaState() != ArenaState.ACTIVE) event.setCancelled(true);
 
         if (arena.getArenaState() != ArenaState.ACTIVE) return;
@@ -56,8 +56,10 @@ public class ArenaListeners implements Listener {
             Location block = event.getBlock().getLocation();
             arena.getBrokenBlocks().add(block);
             arena.playSound(Sound.BLOCK_SNOW_BREAK, block);
+
             if (player.getInventory().firstEmpty() == -1) return;
             int random = (int) (Math.random() * 7);
+
             if (random == 4)
             player.getInventory().addItem(new ItemStack(Material.SNOWBALL));
             return;
