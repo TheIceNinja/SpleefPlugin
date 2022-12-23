@@ -3,7 +3,7 @@ package net.theiceninja.spleef.tasks;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.arena.Arena;
-import net.theiceninja.spleef.arena.ArenaState;
+import net.theiceninja.spleef.arena.manager.ArenaState;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 

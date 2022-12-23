@@ -2,6 +2,7 @@ package net.theiceninja.spleef.arena;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.theiceninja.spleef.arena.manager.ArenaState;
 import net.theiceninja.spleef.utils.ColorUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;

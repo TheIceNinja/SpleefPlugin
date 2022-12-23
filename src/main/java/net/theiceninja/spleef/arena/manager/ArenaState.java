@@ -1,4 +1,4 @@
-package net.theiceninja.spleef.arena;
+package net.theiceninja.spleef.arena.manager;
 
 public enum ArenaState {
 

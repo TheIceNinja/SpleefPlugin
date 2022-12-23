@@ -1,6 +1,6 @@
 package net.theiceninja.spleef;
 
-import net.theiceninja.spleef.arena.ArenaManager;
+import net.theiceninja.spleef.arena.manager.ArenaManager;
 import net.theiceninja.spleef.commands.SpleefCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 

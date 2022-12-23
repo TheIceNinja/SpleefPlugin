@@ -1,7 +1,10 @@
-package net.theiceninja.spleef.arena;
+package net.theiceninja.spleef.arena.manager;
 
 import lombok.Getter;
 import net.theiceninja.spleef.SpleefPlugin;
+import net.theiceninja.spleef.arena.Arena;
+import net.theiceninja.spleef.arena.ArenaListeners;
+import net.theiceninja.spleef.arena.manager.ArenaState;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 

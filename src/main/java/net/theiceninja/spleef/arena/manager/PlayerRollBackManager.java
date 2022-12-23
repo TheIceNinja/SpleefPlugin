@@ -1,4 +1,4 @@
-package net.theiceninja.spleef.arena;
+package net.theiceninja.spleef.arena.manager;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

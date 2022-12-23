@@ -2,7 +2,7 @@ package net.theiceninja.spleef.commands.subcommands;
 
 import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.SpleefPlugin;
-import net.theiceninja.spleef.arena.ArenaManager;
+import net.theiceninja.spleef.arena.manager.ArenaManager;
 import net.theiceninja.spleef.utils.ColorUtils;
 import org.bukkit.entity.Player;
 
