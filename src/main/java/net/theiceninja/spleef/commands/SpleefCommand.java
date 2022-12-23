@@ -66,6 +66,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
         List<String> complete = new ArrayList<>();
+
         if (complete.isEmpty() && args.length == 1 && sender.hasPermission("spleef.admin")) {
             complete.add("create");
             complete.add("list");
@@ -79,6 +80,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
             complete.add("quit");
             complete.add("randomArena");
         }
+
             List<String> result = new ArrayList<>();
             if (args.length == 1) {
                 for (String a : complete) {
