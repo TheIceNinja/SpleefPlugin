@@ -25,6 +25,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
     public SpleefCommand(ArenaManager arenaManager, SpleefPlugin plugin) {
         this.arenaManager = arenaManager;
         this.plugin = plugin;
+
         subCommandList.add(new CreateSubCommand(arenaManager, plugin));
         subCommandList.add(new JoinSubCommand(arenaManager));
         subCommandList.add(new QuitSubCommand(arenaManager));
