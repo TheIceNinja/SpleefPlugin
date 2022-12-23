@@ -14,13 +14,16 @@ public class SpleefPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         this.arenaManager = new ArenaManager();
-
-        getCommand("spleef").setExecutor(new SpleefCommand(arenaManager, this));
-        getCommand("spleef").setTabCompleter(new SpleefCommand(arenaManager, this));
+        registerCommands();
 
         if (getConfig().getConfigurationSection("arenas") != null || !arenaManager.getArenas().isEmpty()) arenaManager.loadArenas(this);
     }
 
     @Override
     public void onDisable() {}
+
+    private void registerCommands() {
+        getCommand("spleef").setExecutor(new SpleefCommand(arenaManager, this));
+        getCommand("spleef").setTabCompleter(new SpleefCommand(arenaManager, this));
+    }
 }
