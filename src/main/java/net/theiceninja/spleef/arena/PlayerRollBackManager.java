@@ -28,6 +28,7 @@ public class PlayerRollBackManager {
         playerLoc.put(player.getUniqueId(), player.getLocation());
         playerGameMode.put(player.getUniqueId(), player.getGameMode());
         playerHealth.put(player.getUniqueId(), player.getHealth());
+
         player.getInventory().clear();
     }
 

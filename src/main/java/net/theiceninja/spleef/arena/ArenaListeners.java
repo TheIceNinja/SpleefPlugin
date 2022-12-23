@@ -2,8 +2,6 @@ package net.theiceninja.spleef.arena;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.theiceninja.spleef.arena.Arena;
-import net.theiceninja.spleef.arena.ArenaState;
 import net.theiceninja.spleef.utils.ColorUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,16 +30,16 @@ public class ArenaListeners implements Listener {
     @EventHandler
     private void onDrop(PlayerDropItemEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
-        if (arena.getArenaState() == ArenaState.ACTIVE ||
-                arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
+        // cancel drop items
+        event.setCancelled(true);
     }
 
     @EventHandler
     private void onDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         if (!arena.isPlaying((Player) event.getEntity())) return;
-        if (arena.getArenaState() == ArenaState.ACTIVE ||
-                arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
+
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -50,9 +48,9 @@ public class ArenaListeners implements Listener {
         if (!arena.isPlaying(event.getPlayer())) return;
 
         event.setDropItems(false);
-        if (arena.getArenaState() == ArenaState.COOLDOWN || arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
+        if (arena.getArenaState() != ArenaState.ACTIVE) event.setCancelled(true);
 
-        if (!(arena.getArenaState() == ArenaState.ACTIVE)) return;
+        if (arena.getArenaState() != ArenaState.ACTIVE) return;
 
         if (event.getBlock().getType() == Material.SNOW_BLOCK) {
             Location block = event.getBlock().getLocation();
@@ -71,9 +69,6 @@ public class ArenaListeners implements Listener {
     private void onPlace(BlockPlaceEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
 
-        if (arena.getArenaState() == ArenaState.ACTIVE ||
-                arena.getArenaState() == ArenaState.COOLDOWN ||
-                arena.getArenaState() == ArenaState.DEFAULT) event.setCancelled(true);
         event.setCancelled(true);
     }
 
@@ -94,7 +89,6 @@ public class ArenaListeners implements Listener {
         Player player = event.getPlayer();
         if (!arena.isPlaying(player)) return;
         if (!(arena.getArenaState() == ArenaState.ACTIVE)) return;
-        if (event.getPlayer().getLocation().getBlock() == null) return;
 
         if ((player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER ||
         player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_WATER_LILY ||
@@ -102,15 +96,15 @@ public class ArenaListeners implements Listener {
                 player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LAVA ||
                 player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_LAVA ||
                 player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_STATIONARY_LAVA))
+
+            // add to spectator because he died
               arena.addSpectatorPlayers(player);
     }
 
     @EventHandler
     private void onSwitch(PlayerSwapHandItemsEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
-        if (arena.getArenaState() == ArenaState.COOLDOWN ||
-                arena.getArenaState() == ArenaState.DEFAULT ||
-                arena.getArenaState() == ArenaState.ACTIVE) event.setCancelled(true);
+             event.setCancelled(true);
     }
 
     @EventHandler
@@ -124,25 +118,22 @@ public class ArenaListeners implements Listener {
     private void onFoodLevelChanged(FoodLevelChangeEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         if (!arena.isPlaying((Player) event.getEntity())) return;
+
         event.setCancelled(true);
     }
 
     @EventHandler
     private void onCrafting(CraftItemEvent event) {
         if (!arena.isPlaying((Player) event.getWhoClicked())) return;
+
         event.setCancelled(true);
     }
 
     @EventHandler
     private void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        if (getArena().isPlaying(event.getPlayer())) {
-            if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
-                event.setCancelled(true);
-                event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
-            }
-        }
+        Player player = event.getPlayer();
 
-        if (getArena().isSpectating(event.getPlayer())) {
+        if (getArena().isPlaying(player) || getArena().isSpectating(player)) {
             if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));

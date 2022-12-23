@@ -22,6 +22,7 @@ public class ArenaManager {
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".minimumPlayers", arena.getMINIMUM_PLAYERS());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".maximumPlayers", arena.getMAX_PLAYERS());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".spawnLocation", arena.getSpawnLocation());
+
         plugin.saveConfig();
     }
 
@@ -35,11 +36,14 @@ public class ArenaManager {
     public void loadArenas(SpleefPlugin plugin) {
         for (String arenaKey : plugin.getConfig().getConfigurationSection("arenas").getKeys(false)) {
             ConfigurationSection configSection = plugin.getConfig().getConfigurationSection("arenas." + arenaKey);
+
             if (configSection == null) return;
+
             int maxPlayers = configSection.getInt("maximumPlayers");
             int minPlayers = configSection.getInt("minimumPlayers");
             Location spawnLocation = configSection.getLocation("spawnLocation");
             String name = configSection.getString("arenaName");
+
             Arena arena = new Arena(name, maxPlayers, minPlayers, spawnLocation, ArenaState.DEFAULT, plugin);
             plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
             arenas.add(arena);
