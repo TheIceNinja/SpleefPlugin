@@ -22,7 +22,5 @@ public class SpleefPlugin extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-        super.onDisable();
-    }
+    public void onDisable() {}
 }
