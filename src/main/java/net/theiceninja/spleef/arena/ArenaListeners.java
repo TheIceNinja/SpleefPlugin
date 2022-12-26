@@ -59,10 +59,13 @@ public class ArenaListeners implements Listener {
             arena.playSound(Sound.BLOCK_SNOW_BREAK, block);
 
             if (player.getInventory().firstEmpty() == -1) return;
-            int random = (int) (Math.random() * 7);
+            int random = (int) random(1, 8);
+            int randomGet = (int) random(1, 12);
 
-            if (random == 4)
-            player.getInventory().addItem(new ItemStack(Material.SNOWBALL));
+            if (random == 4 || random == 3) {
+                for (int i = 1; i <= randomGet; i++)
+                player.getInventory().addItem(new ItemStack(Material.SNOWBALL));
+            }
             return;
         }
         event.setCancelled(true);
@@ -153,4 +156,9 @@ public class ArenaListeners implements Listener {
         if (!arena.isPlaying(player) || !arena.isSpectating(player)) return;
         event.setCancelled(true);
     }
+
+    private double random(int a, int b) {
+        return (double) b + (Math.random() * (a - b + 1));
+    }
+
 }
