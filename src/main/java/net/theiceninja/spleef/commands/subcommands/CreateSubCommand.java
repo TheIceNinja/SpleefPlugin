@@ -34,7 +34,7 @@ public class CreateSubCommand implements SubCommand {
         Arena arena;
         try {
             arena = new Arena(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), player.getLocation(), ArenaState.DEFAULT, plugin);
-            arenaManager.addArena(arena, plugin);
+            arenaManager.addArena(arena);
             player.sendMessage(ColorUtils.color("&aיצרת בהצלחה את הארנה &2&l" + arena.getDisplayName()));
         } catch (Exception e) {
             player.sendMessage(ColorUtils.color("&cאתה צריך מספר, לא ציינת מספר ולכן נכשל יצירת הארנה."));

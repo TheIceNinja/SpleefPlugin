@@ -13,10 +13,11 @@ public class SpleefPlugin extends JavaPlugin {
         getConfig().options().copyDefaults(false);
         saveDefaultConfig();
 
-        this.arenaManager = new ArenaManager();
+        this.arenaManager = new ArenaManager(this);
         registerCommands();
 
-        if (getConfig().getConfigurationSection("arenas") != null || !arenaManager.getArenas().isEmpty()) arenaManager.loadArenas(this);
+        if (getConfig().getConfigurationSection("arenas") != null || !arenaManager.getArenas().isEmpty())
+            arenaManager.loadArenas();
     }
 
     @Override
