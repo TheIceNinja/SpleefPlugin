@@ -24,6 +24,7 @@ public class ArenaManager {
         plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
         arenas.add(arena);
 
+        // add arena settings on the config
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".arenaName", arena.getDisplayName());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".minimumPlayers", arena.getMINIMUM_PLAYERS());
         plugin.getConfig().set("arenas." + arena.getDisplayName() + ".maximumPlayers", arena.getMAX_PLAYERS());
@@ -35,6 +36,7 @@ public class ArenaManager {
     public void removeArena(String arenaName) {
         arenas.removeIf(arena1 ->
                 arena1.getDisplayName().equalsIgnoreCase(arenaName));
+
         plugin.getConfig().set("arenas." + arenaName, null);
         plugin.saveConfig();
     }
@@ -52,6 +54,7 @@ public class ArenaManager {
 
             Arena arena = new Arena(name, maxPlayers, minPlayers, spawnLocation, ArenaState.DEFAULT, plugin);
             plugin.getServer().getPluginManager().registerEvents(new ArenaListeners(arena), plugin);
+
             arenas.add(arena);
         }
     }
@@ -65,9 +68,7 @@ public class ArenaManager {
         if (arena == null) return null;
 
         if (arena.getArenaState() == ArenaState.DEFAULT) return "&cמצב מכובה";
-
         if (arena.getArenaState() == ArenaState.COOLDOWN) return "&eמצב התכוננות למשחק";
-
         if (arena.getArenaState() == ArenaState.ACTIVE) return "&aמצב משחק";
 
         return null;

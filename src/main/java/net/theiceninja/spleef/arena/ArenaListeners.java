@@ -160,5 +160,4 @@ public class ArenaListeners implements Listener {
     private double random(int a, int b) {
         return (double) b + (Math.random() * (a - b + 1));
     }
-
 }

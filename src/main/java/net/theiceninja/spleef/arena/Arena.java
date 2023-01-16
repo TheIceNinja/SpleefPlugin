@@ -46,11 +46,6 @@ public class Arena {
     private SpleefPlugin plugin;
     private PlayerRollBackManager playerRollBackManager;
 
-
-    public Arena(SpleefPlugin plugin) {
-        this.plugin = plugin;
-    }
-
      // arena creation
     public Arena(String displayName, int MAX_PLAYERS, int MINIMUM_PLAYERS, Location spawnLocation, ArenaState arenaState, SpleefPlugin plugin) {
         this.displayName = displayName;
@@ -109,7 +104,9 @@ public class Arena {
         playerRollBackManager.save(player);
         player.setHealth(20);
         player.setFoodLevel(20);
+
         aliveUUID.add(player.getUniqueId());
+
         updateScoreboard();
         player.setGameMode(GameMode.SURVIVAL);
 
@@ -163,15 +160,17 @@ public class Arena {
         optionalArena.get().addAlivePlayers(player);
         playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
         player.teleport(optionalArena.get().spawnLocation);
+
         optionalArena.get().sendMessage("&7[&a+&7] &2" + player.getDisplayName() + " &f#" + aliveUUID.size());
     }
 
     // quit(basic make sound and remove player)
     public void quit(Player player, Optional<Arena> optionalArena) {
-        if (!optionalArena.isPresent()) return;
+        if (optionalArena.isEmpty()) return;
 
         playSound(Sound.ENTITY_WARDEN_HURT);
         sendMessage("&7[&c-&7] &4" + player.getDisplayName());
+
         optionalArena.get().removePlayer(player);
     }
 
@@ -180,8 +179,10 @@ public class Arena {
         // remove from the list and teleport to the spawnLocation
         player.teleport(spawnLocation);
         playSound(Sound.ENTITY_BLAZE_DEATH);
+
         spectatorUUID.add(player.getUniqueId());
         aliveUUID.remove(player.getUniqueId());
+
         updateScoreboard();
         player.setGameMode(GameMode.SPECTATOR);
         player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color("&cאתה מתת!"));
@@ -195,11 +196,13 @@ public class Arena {
             sendMessage(
                     "&r\n&b&l%name% &6&lwon the game!&r\n".replaceAll("%name%", winner.getDisplayName())
             );
+
             // cleanup the map and restore players
             cleanup();
         } else if (aliveUUID.size() == 0) {
             updateScoreboard();
             sendMessage("&cאין מנצח אבל המשחק נגמר!");
+
             cleanup();
         }
     }
@@ -317,17 +320,15 @@ public class Arena {
      // player status (alive|spec)
     private String getPlayerStatus(Player player) {
         if (isPlaying(player)) return "&2שחקן חי";
-
         if (isSpectating(player)) return "&7מצב צופה";
+
         return null;
     }
 
     // state toe string
     private String getStateToString() {
         if (getArenaState() == ArenaState.DEFAULT) return "&cממתין לשחקנים..";
-
         if (getArenaState() == ArenaState.COOLDOWN) return "&eהכנה למשחק";
-
         if (getArenaState() == ArenaState.ACTIVE) return "&aפעיל";
 
         return null;
@@ -337,7 +338,8 @@ public class Arena {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = manager.getNewScoreboard();
         List<String> scoreboardLines = new ArrayList<>();
-        Objective objective = scoreboard.registerNewObjective("ice", "dummy", ColorUtils.color("&#0bc1fb&lS&#34cefc&lk&#5cdafc&ly&#85e7fd&lu&#adf3fd&lp &7| &fספליף"));
+        Objective objective = scoreboard.registerNewObjective("ice", "dummy",
+                ColorUtils.color("&#0bc1fb&lS&#34cefc&lk&#5cdafc&ly&#85e7fd&lu&#adf3fd&lp &7| &fספליף"));
         scoreboardLines.add("&f");
 
         //  different scoreboard to any state

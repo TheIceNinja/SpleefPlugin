@@ -18,6 +18,7 @@ public class CooldownTask extends BukkitRunnable {
     @Override
     public void run() {
         timeLeft--;
+
         if (timeLeft <= 0) {
             cancel();
             // end cooldown and start the game
@@ -25,6 +26,7 @@ public class CooldownTask extends BukkitRunnable {
             arena.playSound(Sound.BLOCK_NOTE_BLOCK_BIT);
             return;
         }
+
         // do something while the cooldown
         arena.playSound(Sound.BLOCK_NOTE_BLOCK_PLING);
         arena.updateScoreboard();

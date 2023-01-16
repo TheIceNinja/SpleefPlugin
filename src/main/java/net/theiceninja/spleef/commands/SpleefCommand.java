@@ -16,16 +16,9 @@ import java.util.Locale;
 
 public class SpleefCommand implements CommandExecutor, TabCompleter {
 
-    private final ArenaManager arenaManager;
-
-    private final SpleefPlugin plugin;
-
     private List<SubCommand> subCommandList = new ArrayList<>();
 
     public SpleefCommand(ArenaManager arenaManager, SpleefPlugin plugin) {
-        this.arenaManager = arenaManager;
-        this.plugin = plugin;
-
         subCommandList.add(new CreateSubCommand(arenaManager, plugin));
         subCommandList.add(new JoinSubCommand(arenaManager));
         subCommandList.add(new QuitSubCommand(arenaManager));

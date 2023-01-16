@@ -16,6 +16,7 @@ public class SpleefPlugin extends JavaPlugin {
         this.arenaManager = new ArenaManager(this);
         registerCommands();
 
+        // register arenas
         if (getConfig().getConfigurationSection("arenas") != null || !arenaManager.getArenas().isEmpty())
             arenaManager.loadArenas();
     }
