@@ -97,11 +97,7 @@ public class ArenaListeners implements Listener {
         if (!(arena.getArenaState() == ArenaState.ACTIVE)) return;
 
         if ((player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.WATER ||
-        player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_WATER_LILY ||
-                player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_WATER_LILY ||
-                player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LAVA ||
-                player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_LAVA ||
-                player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LEGACY_STATIONARY_LAVA))
+                player.getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.LAVA))
 
             // add to spectator because he died
               arena.addSpectatorPlayers(player);
@@ -110,6 +106,7 @@ public class ArenaListeners implements Listener {
     @EventHandler
     private void onSwitch(PlayerSwapHandItemsEvent event) {
         if (!arena.isPlaying(event.getPlayer())) return;
+
              event.setCancelled(true);
     }
 
@@ -117,6 +114,7 @@ public class ArenaListeners implements Listener {
     private void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         if (!arena.isPlaying(player)) return;
+
         arena.removePlayer(player);
     }
 
@@ -152,8 +150,8 @@ public class ArenaListeners implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
 
         Player player = (Player) event.getEntity();
-
         if (!arena.isPlaying(player) || !arena.isSpectating(player)) return;
+
         event.setCancelled(true);
     }
 
