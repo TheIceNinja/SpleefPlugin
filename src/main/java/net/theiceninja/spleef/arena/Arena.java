@@ -338,9 +338,10 @@ public class Arena {
     private void setScoreboard(Player player) {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard scoreboard = manager.getNewScoreboard();
+
         List<String> scoreboardLines = new ArrayList<>();
         Objective objective = scoreboard.registerNewObjective("ice", "dummy",
-                ColorUtil.color("&#0bc1fb&lS&#34cefc&lk&#5cdafc&ly&#85e7fd&lu&#adf3fd&lp &7| &fספליף"));
+                ColorUtil.color("&#3bb6fb&lN&#4bbce7&li&#5bc3d3&ln&#6bc9be&lj&#7bd0aa&la&#8bd696&lN&#9bdd82&le&#abe36e&lt&#bbea5a&lw&#cbf045&lo&#dbf731&lr&#ebfd1d&lk &7| &fספליף"));
         scoreboardLines.add("&f");
 
         //  different scoreboard to any state
@@ -364,7 +365,7 @@ public class Arena {
         }
 
         scoreboardLines.add("&r");
-        scoreboardLines.add("&7play.skyup.cf");
+        scoreboardLines.add("&7play.iceninja.us.to");
         for (int i = 0; i < scoreboardLines.size(); i++) {
             String line = ColorUtil.color(scoreboardLines.get(i));
             objective.getScore(line).setScore(scoreboardLines.size() - i);
