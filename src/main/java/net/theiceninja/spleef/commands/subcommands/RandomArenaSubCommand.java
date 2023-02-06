@@ -23,7 +23,7 @@ public class RandomArenaSubCommand implements SubCommand {
         }
 
         Optional<Arena> optionalArena = arenaManager.getArenas().stream().filter(arena1 -> arena1.getArenaState() == ArenaState.COOLDOWN || arena1.getArenaState() == ArenaState.DEFAULT).findAny();
-        if (!optionalArena.isPresent()) {
+        if (optionalArena.isEmpty()) {
             player.sendMessage(ColorUtil.color("&cאין ארנה פנויה, תאלץ לחכות כמה זמן עד שתתפנה אחת."));
             return;
         }

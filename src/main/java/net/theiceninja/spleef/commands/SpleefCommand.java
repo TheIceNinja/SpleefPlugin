@@ -15,7 +15,7 @@ import java.util.List;
 
 public class SpleefCommand implements CommandExecutor, TabCompleter {
 
-    private List<SubCommand> subCommandList = new ArrayList<>();
+    private final List<SubCommand> subCommandList = new ArrayList<>();
 
     public SpleefCommand(ArenaManager arenaManager, SpleefPlugin plugin) {
         subCommandList.add(new CreateSubCommand(arenaManager, plugin));

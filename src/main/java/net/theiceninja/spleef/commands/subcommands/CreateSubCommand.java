@@ -32,7 +32,6 @@ public class CreateSubCommand implements SubCommand {
         }
 
         try {
-
             if (Integer.parseInt(args[2]) < Integer.parseInt(args[3])) {
                 player.sendMessage(ColorUtil.color("&cמספר המקסימום שחקנים בארנה לא יכול להיות קטן מהמינימום."));
                 return;

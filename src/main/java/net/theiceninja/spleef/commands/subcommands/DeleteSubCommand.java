@@ -14,7 +14,6 @@ public class DeleteSubCommand implements SubCommand {
 
     @Override
     public void execute(Player player, String[] args) {
-
         if (!player.hasPermission("spleef.admin")) {
             player.sendMessage(ColorUtil.color("&cסליחה, אבל אין לך גישה לבצע את הפקודה הזאת."));
             return;

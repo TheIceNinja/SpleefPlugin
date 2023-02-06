@@ -15,7 +15,6 @@ public class QuitSubCommand implements SubCommand {
 
     @Override
     public void execute(Player player, String[] args) {
-
         if (arenaManager.getArenas().isEmpty()) {
             player.sendMessage(ColorUtil.color("&cאין שום ארנות ממה תצא אדוני?"));
             return;
