@@ -44,7 +44,6 @@ public class ArenaManager {
     public void loadArenas() {
         for (String arenaKey : plugin.getConfig().getConfigurationSection("arenas").getKeys(false)) {
             ConfigurationSection configSection = plugin.getConfig().getConfigurationSection("arenas." + arenaKey);
-
             if (configSection == null) return;
 
             int maxPlayers = configSection.getInt("maximumPlayers");

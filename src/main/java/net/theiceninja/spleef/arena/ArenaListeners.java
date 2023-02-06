@@ -3,7 +3,7 @@ package net.theiceninja.spleef.arena;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.arena.manager.ArenaState;
-import net.theiceninja.spleef.utils.ColorUtils;
+import net.theiceninja.spleef.utils.ColorUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -140,7 +140,7 @@ public class ArenaListeners implements Listener {
         if (getArena().isPlaying(player) || getArena().isSpectating(player)) {
             if (!event.getMessage().equalsIgnoreCase("/spleef quit")) {
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ColorUtils.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
+                event.getPlayer().sendMessage(ColorUtil.color("&cאתה לא יכול לעשות את זה בזמן משחק!"));
             }
         }
     }

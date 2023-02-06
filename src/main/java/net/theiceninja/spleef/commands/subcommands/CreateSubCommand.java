@@ -5,7 +5,7 @@ import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.manager.ArenaManager;
 import net.theiceninja.spleef.arena.manager.ArenaState;
-import net.theiceninja.spleef.utils.ColorUtils;
+import net.theiceninja.spleef.utils.ColorUtil;
 import org.bukkit.entity.Player;
 
 @RequiredArgsConstructor
@@ -17,27 +17,33 @@ public class CreateSubCommand implements SubCommand {
     @Override
     public void execute(Player player, String[] args) {
         if (!player.hasPermission("spleef.admin")) {
-            player.sendMessage(ColorUtils.color("&cסליחה, אבל אין לך גישה לבצע את הפקודה הזאת."));
+            player.sendMessage(ColorUtil.color("&cסליחה, אבל אין לך גישה לבצע את הפקודה הזאת."));
             return;
         }
 
         if (args.length < 4) {
-            player.sendMessage(ColorUtils.color("&7Usage: /spleef create <name|maximumPlayers|minimumPlayers>"));
+            player.sendMessage(ColorUtil.color("&7Usage: /spleef create <name|maximumPlayers|minimumPlayers>"));
             return;
         }
 
         if (plugin.getConfig().getString("arenas." + args[1]) != null) {
-            player.sendMessage(ColorUtils.color("&cאתה לא יכול ליצור עוד ארנה עם אותו שם."));
+            player.sendMessage(ColorUtil.color("&cאתה לא יכול ליצור עוד ארנה עם אותו שם."));
             return;
         }
 
-        Arena arena;
         try {
-            arena = new Arena(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), player.getLocation(), ArenaState.DEFAULT, plugin);
+
+            if (Integer.parseInt(args[2]) < Integer.parseInt(args[3])) {
+                player.sendMessage(ColorUtil.color("&cמספר המקסימום שחקנים בארנה לא יכול להיות קטן מהמינימום."));
+                return;
+            }
+
+           Arena arena = new Arena(args[1], Integer.parseInt(args[2]), Integer.parseInt(args[3]), player.getLocation(), ArenaState.DEFAULT, plugin);
+
             arenaManager.addArena(arena);
-            player.sendMessage(ColorUtils.color("&aיצרת בהצלחה את הארנה &2&l" + arena.getDisplayName()));
+            player.sendMessage(ColorUtil.color("&aיצרת בהצלחה את הארנה &2&l" + arena.getDisplayName()));
         } catch (Exception e) {
-            player.sendMessage(ColorUtils.color("&cאתה צריך מספר, לא ציינת מספר ולכן נכשל יצירת הארנה."));
+            player.sendMessage(ColorUtil.color("&cאתה צריך מספר, לא ציינת מספר ולכן נכשל יצירת הארנה."));
         }
     }
 

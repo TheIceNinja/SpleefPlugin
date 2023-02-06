@@ -3,7 +3,7 @@ package net.theiceninja.spleef.commands;
 import net.theiceninja.spleef.SpleefPlugin;
 import net.theiceninja.spleef.arena.manager.ArenaManager;
 import net.theiceninja.spleef.commands.subcommands.*;
-import net.theiceninja.spleef.utils.ColorUtils;
+import net.theiceninja.spleef.utils.ColorUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class SpleefCommand implements CommandExecutor, TabCompleter {
 
@@ -32,7 +31,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ColorUtils.color("&cOnly a player can execute this command!"));
+            sender.sendMessage(ColorUtil.color("&cOnly a player can execute this command!"));
             return true;
         }
 
@@ -40,16 +39,18 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 0) {
             if (player.hasPermission("spleef.admin")) {
-                player.sendMessage(ColorUtils.color("&7Usage: /spleef <create|delete|list|join|quit|randomArena>"));
+                player.sendMessage(ColorUtil.color("&7Usage: /spleef <create|delete|list|join|quit|randomArena>"));
             } else {
-                player.sendMessage(ColorUtils.color("&7Usage: /spleef <join|quit|randomArena>"));
+                player.sendMessage(ColorUtil.color("&7Usage: /spleef <join|quit|randomArena>"));
             }
             return true;
         }
 
         for (SubCommand subCommand : subCommandList) {
-            if (args[0].equalsIgnoreCase(subCommand.getName()))
+            if (args[0].equalsIgnoreCase(subCommand.getName())) {
                 subCommand.execute(player, args);
+                break;
+            }
         }
 
         return true;
@@ -57,10 +58,9 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-
         List<String> complete = new ArrayList<>();
 
-        if (complete.isEmpty() && args.length == 1 && sender.hasPermission("spleef.admin")) {
+        if (args.length == 1 && sender.hasPermission("spleef.admin")) {
             complete.add("create");
             complete.add("list");
             complete.add("delete");
@@ -68,7 +68,7 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
             complete.add("quit");
             complete.add("randomArena");
             complete.add("forceJoin");
-        } else if (complete.isEmpty() && args.length == 1) {
+        } else if (args.length == 1) {
             complete.add("join");
             complete.add("quit");
             complete.add("randomArena");
@@ -77,9 +77,10 @@ public class SpleefCommand implements CommandExecutor, TabCompleter {
             List<String> result = new ArrayList<>();
             if (args.length == 1) {
                 for (String a : complete) {
-                    if (a.toLowerCase(Locale.ROOT).startsWith(args[0].toLowerCase(Locale.ROOT)))
+                    if (a.toLowerCase().startsWith(args[0].toLowerCase()))
                         result.add(a);
                 }
+
                 return result;
             }
         return null;

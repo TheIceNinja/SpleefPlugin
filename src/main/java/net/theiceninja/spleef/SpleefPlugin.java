@@ -21,9 +21,6 @@ public class SpleefPlugin extends JavaPlugin {
             arenaManager.loadArenas();
     }
 
-    @Override
-    public void onDisable() {}
-
     private void registerCommands() {
         getCommand("spleef").setExecutor(new SpleefCommand(arenaManager, this));
         getCommand("spleef").setTabCompleter(new SpleefCommand(arenaManager, this));

@@ -10,7 +10,7 @@ import net.theiceninja.spleef.arena.manager.ArenaState;
 import net.theiceninja.spleef.arena.manager.PlayerRollBackManager;
 import net.theiceninja.spleef.tasks.CooldownGameTask;
 import net.theiceninja.spleef.tasks.CooldownTask;
-import net.theiceninja.spleef.utils.ColorUtils;
+import net.theiceninja.spleef.utils.ColorUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -53,6 +53,7 @@ public class Arena {
         this.MINIMUM_PLAYERS = MINIMUM_PLAYERS;
         this.spawnLocation = spawnLocation;
         this.arenaState = arenaState;
+
         this.plugin = plugin;
         playerRollBackManager = new PlayerRollBackManager();
     }
@@ -185,7 +186,7 @@ public class Arena {
 
         updateScoreboard();
         player.setGameMode(GameMode.SPECTATOR);
-        player.sendTitle(ColorUtils.color("&b&lSpleef"), ColorUtils.color("&cאתה מתת!"));
+        player.sendTitle(ColorUtil.color("&b&lSpleef"), ColorUtil.color("&cאתה מתת!"), 0, 40, 0);
         sendMessage("&c" + player.getDisplayName() + " &edied!");
 
         // send messages if the player is the winner
@@ -211,13 +212,13 @@ public class Arena {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendMessage(ColorUtils.color(str));
+            player.sendMessage(ColorUtil.color(str));
         }
 
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendMessage(ColorUtils.color(str));
+            player.sendMessage(ColorUtil.color(str));
         }
     }
 
@@ -261,13 +262,13 @@ public class Arena {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendTitle(ColorUtils.color("&#0EBFE2&lSpleef"), ColorUtils.color(s), 0, 40, 0);
+            player.sendTitle(ColorUtil.color("&#0EBFE2&lSpleef"), ColorUtil.color(s), 0, 40, 0);
         }
 
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.sendTitle(ColorUtils.color("&#0EBFE2&lSpleef"), ColorUtils.color(s), 0, 40, 0);
+            player.sendTitle(ColorUtil.color("&#0EBFE2&lSpleef"), ColorUtil.color(s), 0, 40, 0);
         }
     }
 
@@ -279,13 +280,13 @@ public class Arena {
         for (UUID playerUUID : aliveUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtils.color(s)));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtil.color(s)));
         }
 
         for (UUID playerUUID : spectatorUUID) {
             Player player = Bukkit.getPlayer(playerUUID);
             if (player == null) continue;
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtils.color(s)));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(ColorUtil.color(s)));
         }
     }
 
@@ -339,7 +340,7 @@ public class Arena {
         Scoreboard scoreboard = manager.getNewScoreboard();
         List<String> scoreboardLines = new ArrayList<>();
         Objective objective = scoreboard.registerNewObjective("ice", "dummy",
-                ColorUtils.color("&#0bc1fb&lS&#34cefc&lk&#5cdafc&ly&#85e7fd&lu&#adf3fd&lp &7| &fספליף"));
+                ColorUtil.color("&#0bc1fb&lS&#34cefc&lk&#5cdafc&ly&#85e7fd&lu&#adf3fd&lp &7| &fספליף"));
         scoreboardLines.add("&f");
 
         //  different scoreboard to any state
@@ -365,7 +366,7 @@ public class Arena {
         scoreboardLines.add("&r");
         scoreboardLines.add("&7play.skyup.cf");
         for (int i = 0; i < scoreboardLines.size(); i++) {
-            String line = ColorUtils.color(scoreboardLines.get(i));
+            String line = ColorUtil.color(scoreboardLines.get(i));
             objective.getScore(line).setScore(scoreboardLines.size() - i);
         }
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -392,7 +393,7 @@ public class Arena {
         ItemStack itemStack = new ItemStack(material);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemStack.setAmount(amount);
-        itemMeta.setDisplayName(ColorUtils.color(displayName));
+        itemMeta.setDisplayName(ColorUtil.color(displayName));
         itemMeta.setUnbreakable(true);
         itemStack.setItemMeta(itemMeta);
 

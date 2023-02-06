@@ -3,7 +3,7 @@ package net.theiceninja.spleef.commands.subcommands;
 import lombok.RequiredArgsConstructor;
 import net.theiceninja.spleef.arena.Arena;
 import net.theiceninja.spleef.arena.manager.ArenaManager;
-import net.theiceninja.spleef.utils.ColorUtils;
+import net.theiceninja.spleef.utils.ColorUtil;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class QuitSubCommand implements SubCommand {
     public void execute(Player player, String[] args) {
 
         if (arenaManager.getArenas().isEmpty()) {
-            player.sendMessage(ColorUtils.color("&cאין שום ארנות ממה תצא אדוני?"));
+            player.sendMessage(ColorUtil.color("&cאין שום ארנות ממה תצא אדוני?"));
             return;
         }
 
@@ -26,7 +26,7 @@ public class QuitSubCommand implements SubCommand {
                 arena1.getSpectatorUUID().contains(player.getUniqueId())).findAny();
 
         if (optionalArena.isEmpty()) {
-            player.sendMessage(ColorUtils.color("&cאתה צריך להיות במשחק כדי לצאת מארנה."));
+            player.sendMessage(ColorUtil.color("&cאתה צריך להיות במשחק כדי לצאת מארנה."));
             return;
         }
 
